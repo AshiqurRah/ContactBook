@@ -1,9 +1,14 @@
-import { Outlet, Link, useLoaderData } from "react-router-dom";
+import { Outlet, Link, useLoaderData,Form, } from "react-router-dom";
 // An <Outlet> should be used in parent route elements to render their child route elements. 
 // This allows nested UI to show up when child routes are rendered. If the parent route matched exactly, 
 // it will render a child index route or nothing if there is no index route.
-import { getContacts } from "../contacts";
+import { getContacts,  createContact  } from "../contacts";
 
+
+export async function action() {
+    const contact = await createContact();
+    return { contact };
+}
 
 export async function loader() {
     const contacts = await getContacts();
@@ -35,9 +40,9 @@ export default function Root() {
                         aria-live="polite"
                         ></div>
                     </form>
-                    <form method="post">
+                    <Form method="post">
                         <button type="submit">New</button>
-                    </form>
+                    </Form>
                 </div>
                 <nav>
                     {contacts.length ? (

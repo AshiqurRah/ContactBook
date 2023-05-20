@@ -6,15 +6,17 @@ import {
 } from "react-router-dom";
 import "./index.css";
 // Export a loader from root.jsx
-import Root, { loader as rootLoader }  from "./routes/root";
+import Root, { loader as rootLoader, action as rootAction, }  from "./routes/root";
 import ErrorPage from "./error-page";
-import Contact from "./routes/contact";
+import Contact, {loader as contactLoader,} from "./routes/contact";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
     errorElement: <ErrorPage/>,
+    // Import and set the action from the FORM on the route
+    action: rootAction,
     // Configure the loader on the route
     loader: rootLoader,
     // children route, nested routes
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
       {
         path: "contacts/:contactId",
         element: <Contact />,
+        loader: contactLoader,
       },
     ],
   },
