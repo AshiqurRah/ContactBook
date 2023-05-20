@@ -1,4 +1,4 @@
-import { Outlet, Link, useLoaderData,Form, redirect, } from "react-router-dom";
+import { Outlet, NavLink, Link, useLoaderData,Form, redirect, } from "react-router-dom";
 // An <Outlet> should be used in parent route elements to render their child route elements. 
 // This allows nested UI to show up when child routes are rendered. If the parent route matched exactly, 
 // it will render a child index route or nothing if there is no index route.
@@ -49,16 +49,25 @@ export default function Root() {
                         <ul>
                         {contacts.map((contact) => (
                             <li key={contact.id}>
-                            <Link to={`contacts/${contact.id}`}>
-                                {contact.first || contact.last ? (
-                                <>
-                                    {contact.first} {contact.last}
-                                </>
-                                ) : (
-                                <i>No Name</i>
-                                )}{" "}
-                                {contact.favorite && <span>★</span>}
-                            </Link>
+                                <NavLink
+                                    to={`contacts/${contact.id}`}
+                                    className={({ isActive, isPending }) =>
+                                    isActive
+                                        ? "active"
+                                        : isPending
+                                        ? "pending"
+                                        : ""
+                                    }
+                                >
+                                    {contact.first || contact.last ? (
+                                    <>
+                                        {contact.first} {contact.last}
+                                    </>
+                                    ) : (
+                                    <i>No Name</i>
+                                    )}{" "}
+                                    {contact.favorite && <span>★</span>}
+                                </NavLink>
                             </li>
                         ))}
                         </ul>
