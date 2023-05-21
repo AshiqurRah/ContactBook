@@ -35,7 +35,17 @@ const router = createBrowserRouter([
             loader: contactLoader,
             action: contactAction,
           },
-          /* the rest of the routes */
+          {
+            path: "/ContactBook/contacts/:contactId/edit",
+            element: <EditContact />,
+            loader: contactLoader,
+            action: editAction,
+          },
+          {
+            path: "/ContactBook/contacts/:contactId/destroy",
+            action: destroyAction,
+            errorElement: <div>Oops! There was an error.</div>,
+          },
         ],
       },
     ],
