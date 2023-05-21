@@ -53,7 +53,7 @@ export default function Contact() {
                 target="_blank"
                 href={`https://github.com/${contact.github}`}
                 >
-                {contact.github}
+                @{contact.github}
                 </a>
             </p>
             )}
