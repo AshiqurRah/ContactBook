@@ -16,7 +16,7 @@ import Index from "./routes/index";
 
 const router = createBrowserRouter([
   {
-    path: "/ContactBook/",
+    path: "/",
     element: <Root/>,
     errorElement: <ErrorPage/>,
     // Import and set the action from the FORM on the route
