@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Index /> },
           {
-            path: "contacts/:contactId",
+            path: "/ContactBook/contacts/:contactId",
             element: <Contact />,
             loader: contactLoader,
             action: contactAction,
