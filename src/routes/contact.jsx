@@ -1,16 +1,31 @@
-import { Form, useLoaderData } from "react-router-dom";
-import { getContact } from "../contacts";
+import { Form, useLoaderData,useFetcher } from "react-router-dom";
+import { getContact, updateContact } from "../contacts";
+
+
+export async function action({ request, params }) {
+  let formData = await request.formData();
+  // updating the contact to have the star
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true",
+  });
+}
 
 // Add a loader to the contact page and access data with useLoaderData
 export async function loader({ params }) {
   const contact = await getContact(params.contactId);
+  if (!contact) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
   return { contact };
 }
 
 
 export default function Contact() {
     const { contact } = useLoaderData();
-
+    console.log(contact)
     return (
         <div id="contact">
         <div>
@@ -32,13 +47,13 @@ export default function Contact() {
             <Favorite contact={contact} />
             </h1>
 
-            {contact.twitter && (
+            {contact.github && (
             <p>
                 <a
                 target="_blank"
-                href={`https://twitter.com/${contact.twitter}`}
+                href={`https://github.com/${contact.github}`}
                 >
-                {contact.twitter}
+                {contact.github}
                 </a>
             </p>
             )}
@@ -71,10 +86,17 @@ export default function Contact() {
 }
 
 function Favorite({ contact }) {
+  const fetcher = useFetcher();
   // yes, this is a `let` for later
   let favorite = contact.favorite;
+
+  // to make the clicking of the star button more responsive
+  if (fetcher.formData) {
+    favorite = fetcher.formData.get("favorite") === "true";
+  }
+
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -86,6 +108,6 @@ function Favorite({ contact }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }

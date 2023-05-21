@@ -32,12 +32,12 @@ export default function EditContact() {
             />
         </p>
         <label>
-            <span>Twitter</span>
+            <span>Github</span>
             <input
                 type="text"
-                name="twitter"
-                placeholder="@jack"
-                defaultValue={contact.twitter}
+                name="github"
+                placeholder="jack"
+                defaultValue={contact.github}
             />
         </label>
         <label>
